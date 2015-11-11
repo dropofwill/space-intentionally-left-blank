@@ -2,7 +2,6 @@ import Promise from 'bluebird';
 import assign from 'object-assign';
 
 const _callbacks = [];
-let _promises    = [];
 
 const Dispatcher = function() {};
 Dispatcher.prototype = assign({}, Dispatcher.protoype, {
@@ -20,26 +19,18 @@ Dispatcher.prototype = assign({}, Dispatcher.protoype, {
    * @param {object} data : data from action
    */
    dispatch: (data) => {
-     const resolves = [];
-     const rejects  = [];
      // Generate promises array to watch
-     _promises = _callbacks.map((func, i) => {
+     _callbacks.map((func, i) => {
        return new Promise((res, rej) => {
-         resolves[i] = res;
-         rejects[i]  = rej;
+         if(data)
+           res(func(data);
+         else
+           rej('No data passed to callbacks');
+       })
+       .catch((error) => {
+         throw new Error(error)
        });
      });
-     // Loop through callbacks and resolve their promises
-     _callbacks.forEach((func, i) => {
-       Promise.resolve(func(data))
-         .then(() => {
-           resolves[i](data);
-         })
-         .catch(() => {
-           rejects[i](new Error('Dispatcher callback unsuccessful'));
-         });
-     });
-     _promises = [];
    },
 });
 
