@@ -43,6 +43,7 @@
     "load-grunt-tasks": "^3.2.0",
     "lodash": "^3.10.1",
     "node-friendly-response": "^3.1.4",
+    "object-assign": "^4.0.1",
     "passport": "^0.3.0",
     "passport-facebook": "^2.0.0",
     "passport-google-oauth": "^0.2.0",
