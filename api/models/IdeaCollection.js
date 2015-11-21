@@ -34,7 +34,8 @@ const schema = new mongoose.Schema({
 // statics
 schema.statics.findByIndex = function(boardId, index) {
   return this.find({boardId: boardId})
-  .populate('ideas', 'content -_id')
+  .select('-_id -__v')
+  .populate('ideas', 'content -_id -__v -boardId')
   .then((collections) => collections[index]);
 };
 

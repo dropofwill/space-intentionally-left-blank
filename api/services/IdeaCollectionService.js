@@ -36,8 +36,8 @@ ideaCollectionService.create = function(boardId, content) {
 ideaCollectionService.getIdeaCollections = function(boardId) {
 
   return IdeaCollection.model.find({boardId: boardId})
-  .select('-_id')
-  .populate('ideas', '-_id')
+  .select('-_id -__v -boardId')
+  .populate('ideas', '-_id -__v -boardId')
   .exec((collections) => collections);
 };
 
